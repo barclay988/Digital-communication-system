@@ -42,7 +42,7 @@ def preamblesCreation():
     storePreambles = np.array(storePreambles)
 
     storePreambles = np.sqrt(2) * storePreambles
-    
+
     storePreambles[::2] = 0
 
     storePreambles = np.fft.ifft(storePreambles)
@@ -110,17 +110,10 @@ def OFDMmodulation(symbols,symbolSize,n):
 
     for i in range(len(OFDMsymbols)):
 
-        tmp += OFDMsymbols[i]
+        OFDMframe += OFDMsymbols[i]
 
-        if (i+1)% symbolSize == 0:
 
-            OFDMframe.append(tmp)
-
-            tmp = []
-
-    for i in range(len(OFDMframe)):
-
-        OFDMframe[i] = preambles + OFDMframe[i]
+    OFDMframe = preambles + OFDMframe
 
 
     return OFDMframe

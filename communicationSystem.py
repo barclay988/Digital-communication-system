@@ -163,18 +163,16 @@ def transmitter(inputBits, cons, freq, SNR):
 
     modulatedSignal = modulation.OFDMmodulation(inputSymbols, nSymbols, 48)
 
-    print("modulated: ", len(modulatedSignal[0]))
+    print("modulated: ", len(modulatedSignal))
     print()
-
-   
 
     modulatedSignal = modulation.upconvertion(modulatedSignal,freq)
 
-    print("upconverted: ", len(modulatedSignal[0]))
+    print("upconverted: ", len(modulatedSignal))
     print()
 
 
-    storePreambles = modulatedSignal[0][:80].tolist()
+    storePreambles = modulatedSignal[:80].tolist()
 
 
     with open("preambles.txt", "w") as file:
@@ -186,6 +184,7 @@ def transmitter(inputBits, cons, freq, SNR):
     STO = 280
 
     CFO = 0.3
+
     modulatedSignal = synchronization.applySTO(modulatedSignal, STO)
         
     modulatedSignal = synchronization.applyCFO(modulatedSignal, CFO, 64)
@@ -198,14 +197,8 @@ def transmitter(inputBits, cons, freq, SNR):
 
 
 
-def receiver(txSignal, cons,  freq):
+def receiver(signal, cons,  freq):
 
-    signal = txSignal[0] 
-
-    # print("signal:",len(signal))
-    # print()
-
-    # exit()
 
     with open("preambles.txt", "r") as file:
                     
